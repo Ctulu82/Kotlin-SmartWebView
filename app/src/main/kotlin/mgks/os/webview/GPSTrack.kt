@@ -13,7 +13,6 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.Settings
-import android.support.v4.app.ActivityCompat
 import android.util.Log
 
 class GPSTrack(private val mContext: Context) : Service(), LocationListener {
@@ -80,9 +79,6 @@ class GPSTrack(private val mContext: Context) : Service(), LocationListener {
                                             longitude = location!!.longitude
                                         }
                                     }
-                                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                                        return location
-                                    }
                                 }
                             }
                         }
@@ -95,26 +91,6 @@ class GPSTrack(private val mContext: Context) : Service(), LocationListener {
         }
 
         return location
-    }
-
-    /**
-     * Stop using GPS listener
-     * Calling this function will stop using GPS in your app
-     */
-    fun stopUsingGPS() {
-        if (locationManager != null) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return
-            }
-            locationManager!!.removeUpdates(this@GPSTrack)
-        }
     }
 
     /**
