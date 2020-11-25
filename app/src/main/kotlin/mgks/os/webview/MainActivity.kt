@@ -39,6 +39,7 @@ import android.view.View
 import android.view.WindowManager
 import android.webkit.CookieManager
 import android.webkit.GeolocationPermissions
+import android.webkit.PermissionRequest
 import android.webkit.URLUtil
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
@@ -368,6 +369,12 @@ class MainActivity : AppCompatActivity() {
                     ActivityCompat.requestPermissions(this@MainActivity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), loc_perm)
                 }
             }
+
+			override fun onPermissionRequest(request: PermissionRequest?) {
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+					request?.grant(arrayOf(PermissionRequest.RESOURCE_VIDEO_CAPTURE))
+				}
+			}
         }
         if (intent.data != null) {
             val path = intent.dataString
